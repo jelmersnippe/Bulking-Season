@@ -1,0 +1,33 @@
+[gd_scene load_steps=3 format=3 uid="uid://dkbgnp3cpsayq"]
+
+[ext_resource type="PackedScene" uid="uid://c2td1cvdwj08f" path="res://player.tscn" id="1_2qg1n"]
+[ext_resource type="PackedScene" uid="uid://bn68ff7vaxisc" path="res://enemy.tscn" id="2_drvsi"]
+
+[node name="TestScene" type="Node2D"]
+
+[node name="Player" parent="." instance=ExtResource("1_2qg1n")]
+position = Vector2(501, 364)
+
+[node name="Enemy" parent="." instance=ExtResource("2_drvsi")]
+position = Vector2(655, 370)
+
+[node name="Enemy2" parent="." instance=ExtResource("2_drvsi")]
+position = Vector2(544, 495)
+
+[node name="Enemy3" parent="." instance=ExtResource("2_drvsi")]
+position = Vector2(175, 225)
+
+[node name="Enemy4" parent="." instance=ExtResource("2_drvsi")]
+position = Vector2(274, 392)
+
+[node name="Enemy5" parent="." instance=ExtResource("2_drvsi")]
+position = Vector2(580, 90)
+
+[node name="Enemy6" parent="." instance=ExtResource("2_drvsi")]
+position = Vector2(386, 144)
+
+[node name="Enemy7" parent="." instance=ExtResource("2_drvsi")]
+position = Vector2(811, 249)
+
+[node name="Enemy8" parent="." instance=ExtResource("2_drvsi")]
+position = Vector2(625, 229)
