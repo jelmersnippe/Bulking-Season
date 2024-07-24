@@ -3,35 +3,57 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
+	[Signal]
+	public delegate void MassChangedEventHandler(int mass);
 	[Export] public HealthComponent HealthComponent;
 	[Export] public Knockable KnockableComponent;
+	[Export] public Area2D PickupRange;
 	private bool _inControl = true;
 	
-	[Export] public const float AttackCooldown = 0.2f;
-	private bool _canAttack = true;
 	[Export]
 	public const float Speed = 300.0f;
 
 	[Export]
 	public Node2D RotationPoint { get; set; }
-	[Export]
-	public Node2D WeaponDisplay { get; set; }
-	[Export]
-	public CollisionPolygon2D WeaponHitbox { get; set; }
 
-	[Export]
-	public float WeaponOffset = 70;
+	[Export] public PackedScene WeaponScene;
+	private Weapon _activeWeapon;
 
-	private bool _weaponSide = false;
 	private bool _dead = false;
+
+	private int _mass = 0;
+	
+	public void IncreaseMass(int amount) {
+		_mass += amount;
+		EmitSignal(SignalName.MassChanged, _mass);
+		Scale += new Vector2(0.1f, 0.1f);
+		HealthComponent.IncreaseMaxHealth(1);
+	}
 	
 	public override void _Ready(){ 
-		WeaponDisplay.RotationDegrees = (_weaponSide ? WeaponOffset : -WeaponOffset);
-		WeaponHitbox.CallDeferred("set_disabled", true);
-		
 		HealthComponent.Died += HealthComponentOnDied;
 		
 		KnockableComponent.KnockedStatusChanged += (knocked) => _inControl = !knocked;
+		
+		PickupRange.AreaEntered += PickupRangeOnAreaEntered;
+
+		if (WeaponScene != null)
+		{
+			var weapon = WeaponScene.Instantiate<Weapon>();
+			RotationPoint.CallDeferred("add_child", weapon);
+			_activeWeapon = weapon;
+		}
+	}
+
+	private void PickupRangeOnAreaEntered(Area2D area)
+	{
+		if (area is not Pickup pickup)
+		{
+			return;
+		}
+		
+		pickup.Consume(this);
+		pickup.QueueFree();
 	}
 
 	public override void _Process(double delta)
@@ -46,19 +68,9 @@ public partial class Player : CharacterBody2D
 		Velocity = direction * Speed;
 		MoveAndSlide();
 		
-		if (Input.IsActionJustPressed("attack") && _canAttack)
+		if (Input.IsActionJustPressed("attack") && _activeWeapon != null)
 		{
-			_canAttack = false;
-			
-			_weaponSide = !_weaponSide;
-			WeaponDisplay.RotationDegrees = (_weaponSide ? WeaponOffset : -WeaponOffset);
-			WeaponHitbox.CallDeferred("set_disabled", false);
-			
-			var hitboxTimer = GetTree().CreateTimer(0.1);
-			hitboxTimer.Timeout += () => WeaponHitbox.Disabled = true;
-			
-			var attackCooldownTimer = GetTree().CreateTimer(AttackCooldown);
-			attackCooldownTimer.Timeout += () => _canAttack = true;
+			_activeWeapon.Attack();
 		}
 
 		if (direction != Vector2.Zero)
@@ -103,6 +115,6 @@ public partial class Player : CharacterBody2D
 
 	private void HealthComponentOnDied()
 	{
-		_dead = false;
+		_dead = true;
 	}
 }

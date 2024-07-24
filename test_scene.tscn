@@ -1,14 +1,15 @@
-[gd_scene load_steps=5 format=3 uid="uid://dkbgnp3cpsayq"]
+[gd_scene load_steps=6 format=3 uid="uid://dkbgnp3cpsayq"]
 
 [ext_resource type="PackedScene" uid="uid://c2td1cvdwj08f" path="res://player.tscn" id="1_2qg1n"]
 [ext_resource type="PackedScene" uid="uid://bn68ff7vaxisc" path="res://enemy.tscn" id="2_drvsi"]
 [ext_resource type="PackedScene" uid="uid://htpnewu73jxa" path="res://camera.tscn" id="2_v8xh5"]
 [ext_resource type="Script" path="res://Spawner.cs" id="3_w6j0a"]
+[ext_resource type="Script" path="res://UI.cs" id="5_fca77"]
 
 [node name="TestScene" type="Node2D"]
 
 [node name="Player" parent="." instance=ExtResource("1_2qg1n")]
-position = Vector2(501, 364)
+position = Vector2(502, 364)
 
 [node name="Camera" parent="." node_paths=PackedStringArray("Target") instance=ExtResource("2_v8xh5")]
 Target = NodePath("../Player")
@@ -17,3 +18,14 @@ Target = NodePath("../Player")
 script = ExtResource("3_w6j0a")
 Player = NodePath("../Player")
 EnemyScene = ExtResource("2_drvsi")
+
+[node name="UI" type="CanvasLayer" parent="." node_paths=PackedStringArray("Player")]
+script = ExtResource("5_fca77")
+Player = NodePath("../Player")
+
+[node name="Label" type="Label" parent="UI"]
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 68.0
+offset_bottom = 33.0
+text = "Mass: 1"

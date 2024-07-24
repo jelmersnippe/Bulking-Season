@@ -1,7 +1,7 @@
-[gd_scene load_steps=10 format=3 uid="uid://c2td1cvdwj08f"]
+[gd_scene load_steps=11 format=3 uid="uid://c2td1cvdwj08f"]
 
 [ext_resource type="Script" path="res://Player.cs" id="1_atthy"]
-[ext_resource type="Script" path="res://HitboxComponent.cs" id="2_6r5by"]
+[ext_resource type="PackedScene" uid="uid://bqc74q5rnvxvk" path="res://weapon.tscn" id="2_6h3uc"]
 [ext_resource type="PackedScene" uid="uid://d2tsre4wdw6jd" path="res://hurtbox_component.tscn" id="3_poe5i"]
 [ext_resource type="PackedScene" uid="uid://cai6kshhthi3i" path="res://health_component.tscn" id="4_us3tf"]
 [ext_resource type="PackedScene" uid="uid://bqo4acr4eplpe" path="res://knockable_component.tscn" id="5_4a0un"]
@@ -16,15 +16,18 @@ size = Vector2(16, 16)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hcejh"]
 size = Vector2(16, 16)
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("HealthComponent", "KnockableComponent", "RotationPoint", "WeaponDisplay", "WeaponHitbox")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_0ds7t"]
+radius = 50.0
+
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("HealthComponent", "KnockableComponent", "PickupRange", "RotationPoint")]
 collision_mask = 0
 motion_mode = 1
 script = ExtResource("1_atthy")
 HealthComponent = NodePath("HealthComponent")
 KnockableComponent = NodePath("KnockableComponent")
+PickupRange = NodePath("PickupRange")
 RotationPoint = NodePath("RotationPoint")
-WeaponDisplay = NodePath("RotationPoint/Weapon/WeaponDisplay")
-WeaponHitbox = NodePath("RotationPoint/Weapon/HitboxComponent/CollisionPolygon2D")
+WeaponScene = ExtResource("2_6h3uc")
 metadata/_edit_group_ = true
 
 [node name="ColorRect" type="ColorRect" parent="."]
@@ -46,39 +49,11 @@ shape = SubResource("RectangleShape2D_x6um1")
 
 [node name="RotationPoint" type="Node2D" parent="."]
 
-[node name="Weapon" type="Node2D" parent="RotationPoint"]
-
-[node name="WeaponDisplay" type="Node2D" parent="RotationPoint/Weapon"]
-rotation = 1.22173
-
-[node name="ColorRect" type="ColorRect" parent="RotationPoint/Weapon/WeaponDisplay"]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = 12.0
-offset_top = -2.0
-offset_right = 36.0
-offset_bottom = 2.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="HitboxComponent" type="Area2D" parent="RotationPoint/Weapon"]
-collision_mask = 2
-script = ExtResource("2_6r5by")
-ContactDamage = 3
-KnockbackForce = 800.0
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="RotationPoint/Weapon/HitboxComponent"]
-position = Vector2(1, -3)
-polygon = PackedVector2Array(-4, 12, 1, 51, 33, 47, 63, 29, 65, -6, 59, -33, 5, -53, -4, -5, 1, -5, 7, -5, 7, 10, 5, 12)
-
 [node name="HurtboxComponent" parent="." node_paths=PackedStringArray("HealthComponent") instance=ExtResource("3_poe5i")]
 collision_mask = 2
 HealthComponent = NodePath("../HealthComponent")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtboxComponent"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="HurtboxComponent"]
 shape = SubResource("RectangleShape2D_iw7fk")
 
 [node name="HealthComponent" parent="." instance=ExtResource("4_us3tf")]
@@ -98,4 +73,8 @@ offset_right = 12.0
 offset_bottom = -12.0
 HealthComponent = NodePath("../HealthComponent")
 
-[connection signal="area_entered" from="RotationPoint/Weapon/HitboxComponent" to="." method="OnWeaponHit"]
+[node name="PickupRange" type="Area2D" parent="."]
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRange"]
+shape = SubResource("CircleShape2D_0ds7t")

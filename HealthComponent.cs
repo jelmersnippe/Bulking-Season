@@ -21,6 +21,13 @@ public partial class HealthComponent : Node
 		EmitSignal(SignalName.HealthChanged, 0, CurrentHealth, MaxHealth);
 	}
 
+	public void IncreaseMaxHealth(int amount)
+	{
+		MaxHealth += amount;
+		CurrentHealth += amount;
+		EmitSignal(SignalName.HealthChanged, amount, CurrentHealth, MaxHealth);
+	}
+
 	public void TakeDamage(int amount)
 	{
 		if (_dead || amount == 0)

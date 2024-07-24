@@ -1,7 +1,8 @@
-[gd_scene load_steps=11 format=3 uid="uid://bn68ff7vaxisc"]
+[gd_scene load_steps=12 format=3 uid="uid://bn68ff7vaxisc"]
 
 [ext_resource type="Script" path="res://Knockable.cs" id="1_oggfn"]
 [ext_resource type="Script" path="res://Enemy.cs" id="1_rfhs1"]
+[ext_resource type="PackedScene" uid="uid://bqfts3bap4eu4" path="res://pickup.tscn" id="2_oofjn"]
 [ext_resource type="Script" path="res://HealthComponent.cs" id="3_mrobu"]
 [ext_resource type="Script" path="res://HurtboxComponent.cs" id="4_6aimy"]
 [ext_resource type="PackedScene" uid="uid://cr61xat5mi3ru" path="res://health_bar.tscn" id="5_sr0k6"]
@@ -22,6 +23,7 @@ motion_mode = 1
 script = ExtResource("1_rfhs1")
 HealthComponent = NodePath("HealthComponent")
 KnockableComponent = NodePath("KnockableComponent")
+DropOnDeath = ExtResource("2_oofjn")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ivrd3")

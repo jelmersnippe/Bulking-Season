@@ -5,7 +5,8 @@ public partial class Enemy : CharacterBody2D
 {
 	[Export] public HealthComponent HealthComponent;
 	[Export] public Knockable KnockableComponent;
-	[Export] public const float Speed = 150.0f;
+	[Export] public float Speed = 100.0f;
+	[Export] public PackedScene DropOnDeath;
 	public Node2D Target;
 
 	private bool _inControl = true;
@@ -18,6 +19,12 @@ public partial class Enemy : CharacterBody2D
 
 	private void HealthComponentOnDied()
 	{
+		if (DropOnDeath != null)
+		{
+			var pickup = DropOnDeath.Instantiate<Pickup>();
+			pickup.GlobalPosition = GlobalPosition;
+			GetTree().Root.CallDeferred("add_child", pickup);
+		}
 		QueueFree();
 	}
 
