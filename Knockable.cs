@@ -3,6 +3,7 @@ using System;
 
 public partial class Knockable : Area2D
 {
+	[Signal] public delegate void KnockedStatusChangedEventHandler(bool knocked);
 	[Export] public CharacterBody2D Body;
 	[Export] public float KnockbackRecoverySpeed = 5f;
 	private bool _knocked = false;
@@ -35,13 +36,14 @@ public partial class Knockable : Area2D
 		{
 			Body.Velocity = Vector2.Zero;
 			_knocked = false;
+			EmitSignal(SignalName.KnockedStatusChanged, _knocked);
 		}
 	}
 
 	private void Knockback(Vector2 direction, float force)
 	{
-		GD.Print(Name + " knocked");
 		Body.Velocity = direction.Normalized() * force;
 		_knocked = true;
+		EmitSignal(SignalName.KnockedStatusChanged, _knocked);
 	}
 }

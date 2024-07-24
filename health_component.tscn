@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cai6kshhthi3i"]
+
+[ext_resource type="Script" path="res://HealthComponent.cs" id="1_s26hd"]
+
+[node name="HealthComponent" type="Node"]
+script = ExtResource("1_s26hd")
+StartingHealth = 20

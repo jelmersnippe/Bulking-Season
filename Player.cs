@@ -3,6 +3,10 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
+	[Export] public HealthComponent HealthComponent;
+	[Export] public Knockable KnockableComponent;
+	private bool _inControl = true;
+	
 	[Export] public const float AttackCooldown = 0.2f;
 	private bool _canAttack = true;
 	[Export]
@@ -19,14 +23,25 @@ public partial class Player : CharacterBody2D
 	public float WeaponOffset = 70;
 
 	private bool _weaponSide = false;
+	private bool _dead = false;
 	
 	public override void _Ready(){ 
 		WeaponDisplay.RotationDegrees = (_weaponSide ? WeaponOffset : -WeaponOffset);
-		WeaponHitbox.Disabled = true;
+		WeaponHitbox.CallDeferred("set_disabled", true);
+		
+		HealthComponent.Died += HealthComponentOnDied;
+		
+		KnockableComponent.KnockedStatusChanged += (knocked) => _inControl = !knocked;
 	}
 
 	public override void _Process(double delta)
 	{
+		if (_dead || !_inControl)
+		{
+			MoveAndSlide();
+			return;
+		}
+		
 		var direction = Input.GetVector("move_left", "move_right", "move_up", "move_down").Normalized();
 		Velocity = direction * Speed;
 		MoveAndSlide();
@@ -37,7 +52,7 @@ public partial class Player : CharacterBody2D
 			
 			_weaponSide = !_weaponSide;
 			WeaponDisplay.RotationDegrees = (_weaponSide ? WeaponOffset : -WeaponOffset);
-			WeaponHitbox.Disabled = false;
+			WeaponHitbox.CallDeferred("set_disabled", false);
 			
 			var hitboxTimer = GetTree().CreateTimer(0.1);
 			hitboxTimer.Timeout += () => WeaponHitbox.Disabled = true;
@@ -84,5 +99,10 @@ public partial class Player : CharacterBody2D
 		}
 		
 		return closestDirection;
+	}
+
+	private void HealthComponentOnDied()
+	{
+		_dead = false;
 	}
 }

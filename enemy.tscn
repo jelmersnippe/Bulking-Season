@@ -1,10 +1,11 @@
-[gd_scene load_steps=9 format=3 uid="uid://bn68ff7vaxisc"]
+[gd_scene load_steps=11 format=3 uid="uid://bn68ff7vaxisc"]
 
 [ext_resource type="Script" path="res://Knockable.cs" id="1_oggfn"]
 [ext_resource type="Script" path="res://Enemy.cs" id="1_rfhs1"]
 [ext_resource type="Script" path="res://HealthComponent.cs" id="3_mrobu"]
 [ext_resource type="Script" path="res://HurtboxComponent.cs" id="4_6aimy"]
 [ext_resource type="PackedScene" uid="uid://cr61xat5mi3ru" path="res://health_bar.tscn" id="5_sr0k6"]
+[ext_resource type="Script" path="res://HitboxComponent.cs" id="6_ihuvl"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ivrd3"]
 
@@ -12,10 +13,15 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7n3pb"]
 
-[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("HealthComponent")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_f5iyf"]
+
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("HealthComponent", "KnockableComponent")]
+collision_layer = 2
+collision_mask = 0
 motion_mode = 1
 script = ExtResource("1_rfhs1")
 HealthComponent = NodePath("HealthComponent")
+KnockableComponent = NodePath("KnockableComponent")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_ivrd3")
@@ -44,9 +50,10 @@ shape = SubResource("RectangleShape2D_8nefr")
 
 [node name="HealthComponent" type="Node" parent="."]
 script = ExtResource("3_mrobu")
-StartingHealth = 10
+StartingHealth = 6
 
 [node name="HurtboxComponent" type="Area2D" parent="." node_paths=PackedStringArray("HealthComponent")]
+collision_layer = 2
 script = ExtResource("4_6aimy")
 HealthComponent = NodePath("../HealthComponent")
 
@@ -59,3 +66,12 @@ offset_top = -26.0
 offset_right = 23.0
 offset_bottom = -15.0
 HealthComponent = NodePath("../HealthComponent")
+
+[node name="HitboxComponent" type="Area2D" parent="."]
+collision_layer = 2
+script = ExtResource("6_ihuvl")
+ContactDamage = 2
+KnockbackForce = 600.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitboxComponent"]
+shape = SubResource("RectangleShape2D_f5iyf")
