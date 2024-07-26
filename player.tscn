@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://c2td1cvdwj08f"]
+[gd_scene load_steps=12 format=3 uid="uid://c2td1cvdwj08f"]
 
 [ext_resource type="Script" path="res://Player.cs" id="1_atthy"]
 [ext_resource type="PackedScene" uid="uid://bqc74q5rnvxvk" path="res://weapon.tscn" id="2_6h3uc"]
@@ -6,6 +6,7 @@
 [ext_resource type="PackedScene" uid="uid://cai6kshhthi3i" path="res://health_component.tscn" id="4_us3tf"]
 [ext_resource type="PackedScene" uid="uid://bqo4acr4eplpe" path="res://knockable_component.tscn" id="5_4a0un"]
 [ext_resource type="PackedScene" uid="uid://cr61xat5mi3ru" path="res://health_bar.tscn" id="6_78c2c"]
+[ext_resource type="PackedScene" uid="uid://blfogcym4yegj" path="res://mass_component.tscn" id="7_y3eyj"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x6um1"]
 size = Vector2(16, 16)
@@ -78,3 +79,5 @@ collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="PickupRange"]
 shape = SubResource("CircleShape2D_0ds7t")
+
+[node name="MassComponent" parent="." instance=ExtResource("7_y3eyj")]
