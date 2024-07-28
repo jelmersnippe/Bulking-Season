@@ -3,8 +3,7 @@ using System;
 
 public partial class Player : CharacterBody2D
 {
-	[Signal]
-	public delegate void MassChangedEventHandler(int mass);
+	[Export] public MassComponent MassComponent;
 	[Export] public HealthComponent HealthComponent;
 	[Export] public Knockable KnockableComponent;
 	[Export] public Area2D PickupRange;
@@ -21,21 +20,15 @@ public partial class Player : CharacterBody2D
 
 	private bool _dead = false;
 
-	private int _mass = 0;
-	
-	public void IncreaseMass(int amount) {
-		_mass += amount;
-		EmitSignal(SignalName.MassChanged, _mass);
-		Scale += new Vector2(0.1f, 0.1f);
-		HealthComponent.IncreaseMaxHealth(1);
-	}
-	
 	public override void _Ready(){ 
 		HealthComponent.Died += HealthComponentOnDied;
 		
 		KnockableComponent.KnockedStatusChanged += (knocked) => _inControl = !knocked;
 		
 		PickupRange.AreaEntered += PickupRangeOnAreaEntered;
+
+		MassComponent.MassChanged += (change, mass) =>
+			Scale = new Vector2(mass / MassComponent.StartingMass, mass / MassComponent.StartingMass);
 
 		if (WeaponScene != null)
 		{
@@ -70,7 +63,7 @@ public partial class Player : CharacterBody2D
 		
 		if (Input.IsActionJustPressed("attack") && _activeWeapon != null)
 		{
-			_activeWeapon.Attack();
+			_activeWeapon.Attack(MassComponent.Mass / MassComponent.StartingMass);
 		}
 
 		if (direction != Vector2.Zero)
@@ -116,5 +109,13 @@ public partial class Player : CharacterBody2D
 	private void HealthComponentOnDied()
 	{
 		_dead = true;
+	}
+
+	public override void _Input(InputEvent @event)
+	{
+		if (@event.IsAction("consume"))
+		{
+			MassComponent.ConsumeAllFuel();
+		}
 	}
 }

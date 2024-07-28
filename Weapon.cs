@@ -19,7 +19,7 @@ public partial class Weapon : Node2D
 		WeaponDisplay.RotationDegrees = (_weaponSide ? WeaponOffset : -WeaponOffset);
 	}
 	
-	public void Attack()
+	public void Attack(float strength)
 	{
 		if (!_canAttack)
 		{
@@ -31,9 +31,10 @@ public partial class Weapon : Node2D
 		_weaponSide = !_weaponSide;
 		WeaponDisplay.RotationDegrees = (_weaponSide ? WeaponOffset : -WeaponOffset);
 
-		var projectile = ProjectileScene.Instantiate<Node2D>();
+		var projectile = ProjectileScene.Instantiate<Projectile>();
 		projectile.GlobalPosition = GlobalPosition;
 		projectile.Rotation = GlobalRotation;
+		projectile.SetMultiplier(strength);
 		GetTree().Root.CallDeferred("add_child", projectile);
 		
 		var projectileLifeTimer = GetTree().CreateTimer(0.1);

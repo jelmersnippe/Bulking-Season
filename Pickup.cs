@@ -3,10 +3,10 @@ using System;
 
 public partial class Pickup : Area2D
 {
-	[Export] public int MassIncrease = 1;
+	[Export] public int FuelAmount = 1;
 	
 	public void Consume(Player player)
 	{
-		player.IncreaseMass(1);
+		player.MassComponent.AddFuel(FuelAmount);
 	}
 }

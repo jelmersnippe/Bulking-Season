@@ -43,6 +43,7 @@ grow_vertical = 2
 color = Color(1, 0.27451, 0.203922, 1)
 
 [node name="KnockableComponent" type="Area2D" parent="." node_paths=PackedStringArray("Body")]
+collision_layer = 2
 script = ExtResource("1_oggfn")
 Body = NodePath("..")
 KnockbackRecoverySpeed = 20.0

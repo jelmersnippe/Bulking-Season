@@ -9,6 +9,7 @@ radius = 6.40312
 rotation = 0.785398
 collision_layer = 4
 script = ExtResource("1_wjrn5")
+FuelAmount = 5
 
 [node name="ColorRect" type="ColorRect" parent="."]
 anchors_preset = 8

@@ -15,27 +15,27 @@ public partial class MassComponent : Node
 	[Export] public float BurnInterval = 1f;
 	[Export] public float BulkRate;
 
-	private float _mass;
-	private float _fuel;
+	public float Mass { get; private set; }
+	public float Fuel { get; private set; }
 	public bool IsBulking { get; private set; }
 
 	// Burn rate increases/decreases with mass, with a minimum to always ensure an approach to zero
-	public float BurnRate => Math.Max(MinBurnRate, BaseBurnRate * Mathf.Pow(_mass / StartingMass, Mathf.Max(1, _mass - StartingMass)));
+	public float BurnRate => Math.Max(MinBurnRate, BaseBurnRate * Mathf.Pow(Mass / StartingMass, Mathf.Max(1, Mass - StartingMass)));
 
 	public override void _Ready()
 	{
-		_mass = StartingMass;
-		EmitSignal(SignalName.MassChanged, 0, _mass);
-		_fuel = StartingFuel;
-		EmitSignal(SignalName.FuelChanged, 0, _fuel);
+		Mass = StartingMass;
+		EmitSignal(SignalName.MassChanged, 0, Mass);
+		Fuel = StartingFuel;
+		EmitSignal(SignalName.FuelChanged, 0, Fuel);
 
 		StartBurnInterval();
 	}
 
 	public void AddFuel(float amount)
 	{
-		_fuel += amount;
-		EmitSignal(SignalName.FuelChanged, amount, _fuel);
+		Fuel += amount;
+		EmitSignal(SignalName.FuelChanged, amount, Fuel);
 	}
 
 	public void ToggleBulk()
@@ -47,6 +47,17 @@ public partial class MassComponent : Node
 			StartBulkInterval();
 		}
 	}
+
+	public void ConsumeAllFuel()
+	{
+		var fuelChange = Fuel;
+		Fuel = 0;
+		EmitSignal(SignalName.FuelChanged, fuelChange, Fuel);
+		
+		var massChange = fuelChange / FuelRequiredPerMass;
+		Mass += massChange;
+		EmitSignal(SignalName.MassChanged, massChange, Mass);
+	}
 	
 	private void ConsumeFuelForMass() {
 		if (!IsBulking)
@@ -54,17 +65,17 @@ public partial class MassComponent : Node
 			return;
 		}
 
-		if (_fuel < BulkRate)
+		if (Fuel < BulkRate)
 		{
 			ToggleBulk();
 			return;
 		}
 
-		_fuel -= BulkRate;
-		EmitSignal(SignalName.FuelChanged, -BulkRate, _fuel);
+		Fuel -= BulkRate;
+		EmitSignal(SignalName.FuelChanged, -BulkRate, Fuel);
 		var massChange = BulkRate / FuelRequiredPerMass;
-		_mass += massChange;
-		EmitSignal(SignalName.MassChanged, massChange, _mass);
+		Mass += massChange;
+		EmitSignal(SignalName.MassChanged, massChange, Mass);
 	}
 	
 	private void StartBulkInterval()
@@ -95,18 +106,18 @@ public partial class MassComponent : Node
 	private void ApplyBurnRate()
 	{
 		var fuelChange = BurnRate;
-		_fuel -= BurnRate;
-		if (_fuel < 0)
+		Fuel -= BurnRate;
+		if (Fuel < 0)
 		{
 			// Negative fuel means we need to tap into mass to sustain the unit
-			fuelChange -= _fuel;
+			fuelChange -= Fuel;
 			
-			var massChange = Mathf.Abs(_fuel) / FuelRequiredPerMass;
-			_mass = Mathf.Max(0, _mass - massChange);
-			EmitSignal(SignalName.MassChanged, massChange, _mass);
+			var massChange = Mathf.Abs(Fuel) / FuelRequiredPerMass;
+			Mass = Mathf.Max(0, Mass - massChange);
+			EmitSignal(SignalName.MassChanged, massChange, Mass);
 				
-			_fuel = 0;
+			Fuel = 0;
 		}
-		EmitSignal(SignalName.FuelChanged, fuelChange, _fuel);
+		EmitSignal(SignalName.FuelChanged, fuelChange, Fuel);
 	}
 }

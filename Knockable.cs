@@ -15,6 +15,7 @@ public partial class Knockable : Area2D
 
 	private void OnAreaEntered(Area2D area)
 	{
+		GD.Print(area.GetParent().Name);
 		if (area is not HitboxComponent hitboxComponent)
 		{
 			return;
@@ -42,6 +43,7 @@ public partial class Knockable : Area2D
 
 	private void Knockback(Vector2 direction, float force)
 	{
+		GD.Print(GetParent().Name + " knocked with force " + force);
 		Body.Velocity = direction.Normalized() * force;
 		_knocked = true;
 		EmitSignal(SignalName.KnockedStatusChanged, _knocked);

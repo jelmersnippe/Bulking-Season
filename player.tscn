@@ -20,10 +20,11 @@ size = Vector2(16, 16)
 [sub_resource type="CircleShape2D" id="CircleShape2D_0ds7t"]
 radius = 50.0
 
-[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("HealthComponent", "KnockableComponent", "PickupRange", "RotationPoint")]
+[node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("MassComponent", "HealthComponent", "KnockableComponent", "PickupRange", "RotationPoint")]
 collision_mask = 0
 motion_mode = 1
 script = ExtResource("1_atthy")
+MassComponent = NodePath("MassComponent")
 HealthComponent = NodePath("HealthComponent")
 KnockableComponent = NodePath("KnockableComponent")
 PickupRange = NodePath("PickupRange")
@@ -81,3 +82,9 @@ collision_mask = 4
 shape = SubResource("CircleShape2D_0ds7t")
 
 [node name="MassComponent" parent="." instance=ExtResource("7_y3eyj")]
+StartingMass = 20.0
+StartingFuel = 100.0
+BaseBurnRate = 5.0
+MinBurnRate = 3.0
+FuelRequiredPerMass = 20.0
+BulkRate = 20.0
