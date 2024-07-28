@@ -51,8 +51,10 @@ public partial class Player : CharacterBody2D
 
 	public override void _Process(double delta)
 	{
+		var sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
 		if (_dead || !_inControl)
 		{
+			sprite.Play("Hurt");
 			MoveAndSlide();
 			return;
 		}
@@ -69,6 +71,16 @@ public partial class Player : CharacterBody2D
 		if (direction != Vector2.Zero)
 		{
 			RotationPoint.RotationDegrees = GetRotationFromDirection(direction);
+			sprite.Play("Move");
+
+			if (direction.X != 0)
+			{
+				sprite.FlipH = direction.X < 0;
+			}
+		}
+		else
+		{
+			sprite.Play("Idle");
 		}
 	}
 	

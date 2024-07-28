@@ -33,11 +33,11 @@ public partial class Knockable : Area2D
 		
 		Body.Velocity -= Body.Velocity.Normalized() * KnockbackRecoverySpeed;
 
-		if (Body.Velocity.Length() < 5)
+		if (Mathf.Abs(Body.Velocity.Length()) < 5)
 		{
 			Body.Velocity = Vector2.Zero;
 			_knocked = false;
-			EmitSignal(SignalName.KnockedStatusChanged, _knocked);
+			EmitSignal(SignalName.KnockedStatusChanged, false);
 		}
 	}
 
@@ -46,6 +46,6 @@ public partial class Knockable : Area2D
 		GD.Print(GetParent().Name + " knocked with force " + force);
 		Body.Velocity = direction.Normalized() * force;
 		_knocked = true;
-		EmitSignal(SignalName.KnockedStatusChanged, _knocked);
+		EmitSignal(SignalName.KnockedStatusChanged, true);
 	}
 }

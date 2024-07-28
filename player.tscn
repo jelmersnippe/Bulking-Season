@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://c2td1cvdwj08f"]
+[gd_scene load_steps=25 format=3 uid="uid://c2td1cvdwj08f"]
 
 [ext_resource type="Script" path="res://Player.cs" id="1_atthy"]
 [ext_resource type="PackedScene" uid="uid://bqc74q5rnvxvk" path="res://weapon.tscn" id="2_6h3uc"]
@@ -7,18 +7,114 @@
 [ext_resource type="PackedScene" uid="uid://bqo4acr4eplpe" path="res://knockable_component.tscn" id="5_4a0un"]
 [ext_resource type="PackedScene" uid="uid://cr61xat5mi3ru" path="res://health_bar.tscn" id="6_78c2c"]
 [ext_resource type="PackedScene" uid="uid://blfogcym4yegj" path="res://mass_component.tscn" id="7_y3eyj"]
+[ext_resource type="Texture2D" uid="uid://bnwpo8u56ti5b" path="res://sprites/character.png" id="8_8kyt6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x6um1"]
-size = Vector2(16, 16)
+size = Vector2(22, 22)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_iw7fk"]
-size = Vector2(16, 16)
+size = Vector2(18, 41)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hcejh"]
-size = Vector2(16, 16)
+size = Vector2(18, 41)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0ds7t"]
-radius = 50.0
+radius = 70.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cr7o6"]
+atlas = ExtResource("8_8kyt6")
+region = Rect2(128, 260, 128, 127)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jbeng"]
+atlas = ExtResource("8_8kyt6")
+region = Rect2(0, 2, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_butf8"]
+atlas = ExtResource("8_8kyt6")
+region = Rect2(128, 2, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_23cen"]
+atlas = ExtResource("8_8kyt6")
+region = Rect2(256, 2, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m3y8f"]
+atlas = ExtResource("8_8kyt6")
+region = Rect2(384, 2, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ofhew"]
+atlas = ExtResource("8_8kyt6")
+region = Rect2(0, 130, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_62twp"]
+atlas = ExtResource("8_8kyt6")
+region = Rect2(128, 130, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_36pre"]
+atlas = ExtResource("8_8kyt6")
+region = Rect2(256, 130, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rexdg"]
+atlas = ExtResource("8_8kyt6")
+region = Rect2(384, 130, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0y067"]
+atlas = ExtResource("8_8kyt6")
+region = Rect2(512, 130, 128, 128)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_8lwln"]
+atlas = ExtResource("8_8kyt6")
+region = Rect2(640, 130, 128, 128)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_wacax"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cr7o6")
+}],
+"loop": true,
+"name": &"Hurt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jbeng")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_butf8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_23cen")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_m3y8f")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ofhew")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_62twp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_36pre")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rexdg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0y067")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_8lwln")
+}],
+"loop": true,
+"name": &"Move",
+"speed": 5.0
+}]
 
 [node name="Player" type="CharacterBody2D" node_paths=PackedStringArray("MassComponent", "HealthComponent", "KnockableComponent", "PickupRange", "RotationPoint")]
 collision_mask = 0
@@ -32,21 +128,8 @@ RotationPoint = NodePath("RotationPoint")
 WeaponScene = ExtResource("2_6h3uc")
 metadata/_edit_group_ = true
 
-[node name="ColorRect" type="ColorRect" parent="."]
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -8.0
-offset_top = -8.0
-offset_right = 8.0
-offset_bottom = 8.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_use_anchors_ = true
-
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 14)
 shape = SubResource("RectangleShape2D_x6um1")
 
 [node name="RotationPoint" type="Node2D" parent="."]
@@ -56,6 +139,7 @@ collision_mask = 2
 HealthComponent = NodePath("../HealthComponent")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="HurtboxComponent"]
+position = Vector2(-1, 2.5)
 shape = SubResource("RectangleShape2D_iw7fk")
 
 [node name="HealthComponent" parent="." instance=ExtResource("4_us3tf")]
@@ -66,13 +150,14 @@ Body = NodePath("..")
 KnockbackRecoverySpeed = 10.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KnockableComponent"]
+position = Vector2(-1, 2.5)
 shape = SubResource("RectangleShape2D_hcejh")
 
 [node name="HealthBar" parent="." node_paths=PackedStringArray("HealthComponent") instance=ExtResource("6_78c2c")]
-offset_left = -12.0
-offset_top = -16.0
-offset_right = 12.0
-offset_bottom = -12.0
+offset_left = -21.0
+offset_top = -31.0
+offset_right = 21.0
+offset_bottom = -25.0
 HealthComponent = NodePath("../HealthComponent")
 
 [node name="PickupRange" type="Area2D" parent="."]
@@ -88,3 +173,10 @@ BaseBurnRate = 5.0
 MinBurnRate = 3.0
 FuelRequiredPerMass = 20.0
 BulkRate = 20.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.4, 0.4)
+sprite_frames = SubResource("SpriteFrames_wacax")
+animation = &"Idle"
+autoplay = "Idle"
+frame_progress = 0.0595223
