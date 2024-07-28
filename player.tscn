@@ -147,7 +147,7 @@ shape = SubResource("RectangleShape2D_iw7fk")
 [node name="KnockableComponent" parent="." node_paths=PackedStringArray("Body") instance=ExtResource("5_4a0un")]
 collision_mask = 2
 Body = NodePath("..")
-KnockbackRecoverySpeed = 10.0
+KnockbackRecoverySpeed = 60.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="KnockableComponent"]
 position = Vector2(-1, 2.5)
@@ -179,4 +179,4 @@ scale = Vector2(0.4, 0.4)
 sprite_frames = SubResource("SpriteFrames_wacax")
 animation = &"Idle"
 autoplay = "Idle"
-frame_progress = 0.0595223
+frame_progress = 0.095048

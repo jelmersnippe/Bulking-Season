@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://slij4y4vhdre"
-path="res://.godot/imported/walk.png-e9cd364d53ec7a5733de2b7aa626da05.ctex"
+uid="uid://cudb8atomerqv"
+path="res://.godot/imported/Slime Sprite Sheet.png-96d7d3d34f96d78023f7e91a958d178a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Base Character - Free/Base Character - Free/walk.png"
-dest_files=["res://.godot/imported/walk.png-e9cd364d53ec7a5733de2b7aa626da05.ctex"]
+source_file="res://sprites/Slime Sprite Sheet.png"
+dest_files=["res://.godot/imported/Slime Sprite Sheet.png-96d7d3d34f96d78023f7e91a958d178a.ctex"]
 
 [params]
 

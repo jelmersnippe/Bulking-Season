@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://ypws6f38ymg6"
-path="res://.godot/imported/death.png-ea116cdad40b869643ef6eb76c51956f.ctex"
+uid="uid://bd8w3cp371ov5"
+path="res://.godot/imported/Medium Slime Split.png-9058d16db3d76415109aa12e1eab1ac6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Base Character - Free/Base Character - Free/death.png"
-dest_files=["res://.godot/imported/death.png-ea116cdad40b869643ef6eb76c51956f.ctex"]
+source_file="res://sprites/Medium Slime Split.png"
+dest_files=["res://.godot/imported/Medium Slime Split.png-9058d16db3d76415109aa12e1eab1ac6.ctex"]
 
 [params]
 

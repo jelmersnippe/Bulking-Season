@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b51nod7chysv"
-path="res://.godot/imported/damage.png-358771a38f66d92216785382e14daf0e.ctex"
+uid="uid://cjwfhf3hi8flj"
+path="res://.godot/imported/Dungeon Collectables.png-386300b3884d29f1b3ba23638902370c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/Base Character - Free/Base Character - Free/damage.png"
-dest_files=["res://.godot/imported/damage.png-358771a38f66d92216785382e14daf0e.ctex"]
+source_file="res://sprites/Dungeon Collectables.png"
+dest_files=["res://.godot/imported/Dungeon Collectables.png-386300b3884d29f1b3ba23638902370c.ctex"]
 
 [params]
 

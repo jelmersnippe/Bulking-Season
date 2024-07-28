@@ -30,9 +30,20 @@ public partial class Enemy : CharacterBody2D
 
 	public override void _Process(double delta)
 	{
+		var sprite = GetNode<AnimatedSprite2D>("AnimatedSprite2D");
+		if (Target == null)
+		{
+			sprite.Play("Idle");
+		}
+		else if (!_inControl)
+		{
+			sprite.Play("Hurt");
+		}
+		
 		if (_inControl && Target != null)
 		{
 			Velocity = GlobalPosition.DirectionTo(Target.GlobalPosition) * Speed;
+			sprite.Play("Move");
 		}
 		
 		MoveAndSlide();

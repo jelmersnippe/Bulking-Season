@@ -33,7 +33,7 @@ public partial class Knockable : Area2D
 		
 		Body.Velocity -= Body.Velocity.Normalized() * KnockbackRecoverySpeed;
 
-		if (Mathf.Abs(Body.Velocity.Length()) < 5)
+		if (Body.Velocity.Length() < 15)
 		{
 			Body.Velocity = Vector2.Zero;
 			_knocked = false;
